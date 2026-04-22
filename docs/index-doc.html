@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Documentação KanbanClient</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; }
+  h1, h2 { color: #2c3e50; }
+  h1 { text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  th { background-color: #3498db; color: white; }
+  ul { margin: 10px 0; padding-left: 20px; }
+  code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; font-family: monospace; }
+  pre { background: #f8f9fa; padding: 15px; border-radius: 5px; overflow-x: auto; }
+</style>
+</head>
+<body>
+<h1>📋 Documentação Técnica - KanbanClient v0.0.0</h1>
+
+<h2>🎯 Visão Geral do Aplicativo</h2>
+<p><strong>KanbanClient</strong> é um sistema web standalone para gerenciamento de produção industrial (Pracafé - Embalagens de Pano). Funcionalidades principais:</p>
+<ul>
+  <li>CRUD de pedidos de produção com drag & drop.</li>
+  <li>Rastreamento de progresso com barras visuais.</li>
+  <li>Previsões IA via Google Gemini.</li>
+  <li>Relatórios PDF customizados.</li>
+  <li>Gerenciamento de catálogos (produtos/clientes).</li>
+  <li>Sincronização híbrida LocalStorage + SQLite.</li>
+</ul>
+
+<h2>🛠️ Stack Tecnológica & Dependências</h2>
+<table>
+  <tr><th>Categoria</th><th>Tecnologias</th><th>Versão/Pacote</th></tr>
+  <tr><td>Frontend</td><td>React + TypeScript + Vite + TailwindCSS</td><td>React ^19.2.0, Vite ^6.2.0</td></tr>
+  <tr><td>Persistência</td><td>LocalStorage + SQLite (Vite proxy)</td><td>kanban-orders.sqlite</td></tr>
+  <tr><td>IA/ML</td><td>Google Gemini 2.5 Flash</td><td>@google/genai ^1.30.0 (VITE_GEMINI_API_KEY)</td></tr>
+  <tr><td>Cloud (Opcional)</td><td>Supabase</td><td>@supabase/supabase-js ^2</td></tr>
+</table>
+
+<h2>📁 Hierarquia de Arquivos & Componentes</h2>
+<pre><code>KANBANCLIENT/
+├── App.tsx ....................... Componente raiz (estado + lógica)
+├── types.ts ...................... Tipos (ProductionOrder, OrderStatus)
+├── components/
+│   ├── NewOrderModal.tsx ......... Form CRUD pedidos + calc bobinas
+│   ├── DataManagementModal.tsx ... Gerenciar produtos/clientes
+│   ├── ProgressBar.tsx ........... Barra progresso colorida
+│   └── OrderCard.tsx ............. Card pedido (não usado atual)
+├── services/
+│   ├── gemini.ts ................ IA preditiva conclusão
+│   └── supabase.ts ............... Cliente Supabase configurável
+├── kanban-db.json ................ Fallback produtos/clientes
+├── kanban-orders.sqlite .......... Banco pedidos principal
+└── package.json .................. Dependências + scripts</code></pre>
+
+<h2>🏗️ Fluxo de Funcionamento</h2>
+<ol>
+  <li><strong>Inicialização:</strong> Carrega SQLite orders + LocalStorage catálogos (polling 2.5s sync).</li>
+  <li><strong>CRUD:</strong> NewOrderModal → handleSaveOrder → POST SQLite + LocalStorage debounce 500ms.</li>
+  <li><strong>Drag & Drop:</strong> Reordenação visual (estado React).</li>
+  <li><strong>Progresso:</strong> Input quantidade → auto status (Pendente→Produzindo→Concluído).</li>
+  <li><strong>IA:</strong> Botão predição → Gemini analisa progresso/data → aiPrediction.</li>
+  <li><strong>PDF:</strong> Botão → HTML print-friendly → browser print dialog.</li>
+</ol>
+
+<h2>💾 Organização Banco Local</h2>
+<table>
+  <tr><th>Armazenamento</th><th>Chave/Tabela</th><th>Estrutura</th><th>Uso</th></tr>
+  <tr><td>LocalStorage</td><td>kanban_db_orders</td><td>ProductionOrder[] JSON</td><td>Backup/sync pedidos</td></tr>
+  <tr><td>SQLite</td><td>/api/orders</td><td>Pedidos (SQLite via Vite proxy)</td><td>Persistência principal</td></tr>
+  <tr><td>LocalStorage</td><td>kanban_db_products</td><td>string[] JSON</td><td>Catalogo editável produtos</td></tr>
+  <tr><td>LocalStorage</td><td>kanban_db_clients</td><td>string[] JSON</td><td>Catalogo editável clientes</td></tr>
+</table>
+
+<h2>⚙️ APIs & Services</h2>
+<table>
+  <tr><th>Service</th><th>Endpoint/Method</th><th>Função</th></tr>
+  <tr><td>Vite Proxy</td><td>GET/POST /api/orders</td><td>CRUD SQLite pedidos</td></tr>
+  <tr><td>Vite Proxy</td><td>GET/POST /api/db</td><td>Sync produtos/clientes JSON</td></tr>
+  <tr><td>Gemini</td><td>POST generateContent</td><td>Predição IA (model: gemini-2.5-flash)</td></tr>
+  <tr><td>Supabase</td><td>Configurável (não ativo)</td><td>Futuro sync cloud</td></tr>
+</table>
+
+<h2>🎨 Funcionalidades Específicas PDF</h2>
+<ul>
+  <li>Título: \"Controle de Produção Pra Café\" centralizado 24px.</li>
+  <li>Tabela compacta: padding 2px, bordas finas.</li>
+  <li>Cores por status na linha toda:
+    <ul>
+      <li>Pendente: #f3e5f5 (roxo claro)</li>
+      <li>Produzindo: #e1f5fe (azul claro) + texto branco</li>
+      <li>Concluído: #fff3e0 (laranja claro)</li>
+    </ul>
+  </li>
+  <li>Rodapé com timestamp geração.</li>
+</ul>
+
+<h2>🚀 Instalação & Execução</h2>
+<pre><code>git clone <repo>
+cd KANBANCLIENT
+npm install
+# Configure .env: VITE_GEMINI_API_KEY=your_key
+npm run dev  # http://localhost:5173
+npm run build # dist/ otimizado</code></pre>
+
+<p><strong>Gerado automaticamente: ${new Date().toLocaleString('pt-BR')}</strong></p>
+</body>
+</html>

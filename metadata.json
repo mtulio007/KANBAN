@@ -1,0 +1,5 @@
+{
+  "name": "KanbanClient_old",
+  "description": "A smart Kanban board for manufacturing production tracking. Monitors order progress, quantity, and status with AI-powered completion predictions.",
+  "requestFramePermissions": []
+}

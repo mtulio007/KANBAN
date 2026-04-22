@@ -1,0 +1,34 @@
+[
+  {
+    "id": "stock1",
+    "productName": "PANO CAFÉ Z ESPECIAL 60X3,00MT PRETO",
+    "externoQty": 150,
+    "galpao2Qty": 850,
+    "totalQty": 1000,
+    "lastUpdated": "2025-01-15"
+  },
+  {
+    "id": "stock2",
+    "productName": "PANO CAFÉ Z ESPECIAL 80X3,00MT PRETO",
+    "externoQty": 200,
+    "galpao2Qty": 300,
+    "totalQty": 500,
+    "lastUpdated": "2025-01-14"
+  },
+  {
+    "id": "stock3",
+    "productName": "PANO CAFÉ Z COMUM 10X04",
+    "externoQty": 0,
+    "galpao2Qty": 1200,
+    "totalQty": 1200,
+    "lastUpdated": "2025-01-15"
+  },
+  {
+    "id": "stock4",
+    "productName": "PANO CAFÉ Z ESPECIAL 70X3,00MT PRETO",
+    "externoQty": 75,
+    "galpao2Qty": 425,
+    "totalQty": 500,
+    "lastUpdated": "2025-01-13"
+  }
+]
