@@ -1,23 +1,62 @@
 {
-  "name": "kanbanclient_old",
+  "name": "kanbanclient",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "main": "electron/main.js",
+  "homepage": "./",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "concurrently \"npm run react:dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "react:dev": "vite",
+    "react:build": "vite build",
+    "electron:dev": "cross-env MODE=development vite build && wait-on dist/index.html && electron .",
+    "electron:build": "npm run react:build && electron-builder",
     "preview": "vite preview"
   },
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "@google/genai": "^1.30.0",
-    "@supabase/supabase-js": "2"
+    "@supabase/supabase-js": "2",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "vite": "^6.2.0",
+    "electron": "^32.1.2",
+    "electron-builder": "^24.13.3",
+    "@electron-toolkit/preload": "^3.0.1",
+    "wait-on": "^7.2.0",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
+  },
+  "build": {
+    "appId": "com.kanbanclient.desktop",
+    "productName": "Kanban Client",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "electron/**/*",
+      "kanban-orders.sqlite",
+      "kanban-db.json",
+      "public/**/*"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "public/icon.jpg"
+    }
   }
 }

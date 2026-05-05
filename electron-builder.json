@@ -1,0 +1,26 @@
+{
+  "appId": "com.kanbanclient.desktop",
+  "productName": "Kanban Client",
+  "directories": {
+    "output": "dist"
+  },
+  "files": [
+    "dist/**/*",
+    "node_modules/**/*",
+    "electron/**/*",
+    "kanban-orders.sqlite",
+    "kanban-db.json",
+    "public/**/*"
+  ],
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "include": "installer.nsh"
+  },
+  "win": {
+    "target": "nsis",
+    "icon": "public/icon.jpg"
+  }
+}

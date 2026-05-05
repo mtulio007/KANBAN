@@ -4,6 +4,11 @@ interface LoginProps {
   onLogin: () => void;
 }
 
+const validCredentials = [
+  { username: 'Tulio', password: '124578' },
+  { username: 'User', password: 'User' },
+];
+
 export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -11,13 +16,21 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === 'Tulio' && password === '124578') {
+
+    const isValid = validCredentials.some(
+      (credentials) =>
+        credentials.username === username && credentials.password === password,
+    );
+
+    if (isValid) {
+      setError('');
       onLogin();
-    } else {
-      setUsername('');
-      setPassword('');
-      setError('Senha ou login Inválidos');
+      return;
     }
+
+    setUsername('');
+    setPassword('');
+    setError('Senha ou login inválidos');
   };
 
   return (
