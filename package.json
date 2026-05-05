@@ -9,30 +9,30 @@
     "dev": "concurrently \"npm run react:dev\" \"wait-on http://localhost:3000 && electron .\"",
     "react:dev": "vite",
     "react:build": "vite build",
-    "electron:dev": "cross-env MODE=development vite build && wait-on dist/index.html && electron .",
-    "electron:build": "npm run react:build && electron-builder",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "electron:dev": "npm run build:electron && cross-env MODE=development vite build && wait-on dist/index.html && electron .",
+    "electron:build": "npm run build:electron && npm run react:build && electron-builder",
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "@google/genai": "^1.30.0",
     "@supabase/supabase-js": "2",
-    "sqlite3": "^5.1.7"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@electron-toolkit/preload": "^3.0.1",
     "@types/node": "^22.14.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^5.0.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
     "electron": "^32.1.2",
     "electron-builder": "^24.13.3",
-    "@electron-toolkit/preload": "^3.0.1",
-    "wait-on": "^7.2.0",
-    "concurrently": "^8.2.2",
-    "cross-env": "^7.0.3"
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0",
+    "wait-on": "^7.2.0"
   },
   "build": {
     "appId": "com.kanbanclient.desktop",

@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>📋 Documentação Técnica - KanbanClient v0.0.0</h1>
+<h1>📋 Documentação Técnica - KanbanClient v0.0.1</h1>
 
 <h2>🎯 Visão Geral do Aplicativo</h2>
 <p><strong>KanbanClient</strong> é um sistema web standalone para gerenciamento de produção industrial (Pracafé - Embalagens de Pano). Funcionalidades principais:</p>
@@ -95,14 +95,51 @@
   <li>Rodapé com timestamp geração.</li>
 </ul>
 
+<h2>⚙️ Requisitos de Instalação</h2>
+<ul>
+  <li>Node.js 18+ ou 20+ (recomendado Node 20/LTS).</li>
+  <li>npm 10+ (ou Yarn/Pnpm compatível).</li>
+  <li>Git para clonar o repositório.</li>
+  <li>Conexão de internet para instalar dependências.</li>
+  <li>Opcional: chave Google Gemini se for usar previsão IA.</li>
+</ul>
+
 <h2>🚀 Instalação & Execução</h2>
 <pre><code>git clone <repo>
 cd KANBANCLIENT
 npm install
-# Configure .env: VITE_GEMINI_API_KEY=your_key
-npm run dev  # http://localhost:5173
-npm run build # dist/ otimizado</code></pre>
+# Crie o arquivo .env na raiz do projeto
+# VITE_GEMINI_API_KEY=your_key
 
-<p><strong>Gerado automaticamente: ${new Date().toLocaleString('pt-BR')}</strong></p>
+# Para desenvolvimento Electron local:
+npm run electron:dev
+
+# Para apenas front-end Vite:
+npm run react:dev
+
+# Para compilar arquivos Electron TypeScript antes do build:
+npm run build:electron
+
+# Para gerar versão de produção Electron:
+npm run electron:build
+
+# Ver preview do build Vite:
+npm run preview</code></pre>
+
+<h2>🐞 Erros Comuns e Correções</h2>
+<ul>
+  <li><strong>Unable to find Electron app ... electron/main.js</strong><br>
+      Execute <code>npm run build:electron</code> antes de <code>npm run electron:dev</code> ou <code>npm run electron:build</code>.</li>
+  <li><strong>Não foi possível localizar o arquivo de declaração para o módulo 'react'</strong><br>
+      Garanta que <code>@types/react</code> e <code>@types/react-dom</code> estão instalados nas dependências de desenvolvimento.</li>
+  <li><strong>Erro de compilação TypeScript em JSX</strong><br>
+      Verifique que <code>tsconfig.json</code> contém <code>"jsx": "react-jsx"</code> e que o projeto está usando o template React correto.</li>
+  <li><strong>Problema de login</strong><br>
+      Usuários válidos atuais: <code>Tulio / 124578</code> e <code>User / User</code>. Outros valores retornam error.</li>
+  <li><strong>Falha ao gerar build</strong><br>
+      Confirme que o arquivo <code>tsconfig.electron.json</code> existe e que o script <code>build:electron</code> foi executado.</li>
+</ul>
+
+<p><strong>Atualizado em: 05/05/2026</strong></p>
 </body>
 </html>
