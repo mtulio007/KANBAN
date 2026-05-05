@@ -14,7 +14,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
     if (username === 'Tulio' && password === '124578') {
       onLogin();
     } else {
-      setError('Credenciais incorretas. Use Tulio / 124578');
+      setUsername('');
+      setPassword('');
+      setError('Senha ou login Inválidos');
     }
   };
 

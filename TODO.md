@@ -1,17 +1,6 @@
-# TODO Plan: Move PDF Title Icon Left
+# TODO List for Login Error Fix
 
-**Status**: In Progress
-
-## Steps:
-- [x] 1. User approved edit plan for App.tsx (generatePDF header layout)
-- [x] 2. Edit App.tsx: Update flex container style in htmlContent (center → flex-start + left padding)
-
-- [x] 3. Test PDF generation (npm run dev → click PDF → print preview)
-
-- [x] 4. Update TODO.md with completion
-
-- [x] 5. Attempt completion
-
-
-**Files to Edit**: App.tsx
+- [x] Step 1: Edit components/Login.tsx to clear username/password fields and set error message to "Senha ou login Inválidos" on failed login.
+- [ ] Step 2: Test the change by running the app and simulating failed login.
+- [ ] Step 3: Mark complete and cleanup TODO.md.
 
